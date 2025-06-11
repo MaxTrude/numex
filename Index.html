@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="de"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;numex Quiz&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body { font-family: sans-serif; padding: 2em; max-width: 600px; margin: auto; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.hidden { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.question { margin-bottom: 1em; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.answers label { display: block; margin: 0.5em 0; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.timer { font-weight: bold; color: darkred; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.result { font-size: 1.2em; margin-top: 2em; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button { margin-top: 1em; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;Numerical Reasoning Quiz&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="quiz-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="question-box" class="question"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;form id="answers-form" class="answers"&gt;&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="timer" id="timer"&gt;Zeit: 90&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="next-btn" class="hidden"&gt;Nächste Frage&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="result" class="result hidden"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const questions = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Was ist 20% von 150?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["25", "30", "35", "40"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "30"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Wenn der Umsatz 12.000€ beträgt und die Kosten 9.000€, wie hoch ist der Gewinn?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["2.000€", "3.000€", "4.000€", "5.000€"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "3.000€"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Ein Wertpapier steigt von 80€ auf 100€. Wie viel Prozent ist das?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["20%", "25%", "30%", "18%"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "25%"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Ein Produkt kostet nach 10% Rabatt noch 90€. Wie hoch war der Ursprungspreis?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["95€", "100€", "105€", "110€"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "100€"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Wie viele Sekunden hat eine Stunde?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["3.600", "6.000", "3.000", "3.200"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "3.600"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Welcher Bruch entspricht 0,75?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["3/4", "2/3", "4/5", "1/2"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "3/4"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Ein Wert sinkt von 500 auf 400. Wie viel Prozent ist das?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["20%", "25%", "15%", "30%"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "20%"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Welcher ist der Median der Zahlen 2, 4, 7, 8, 9?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["7", "6", "8", "9"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "7"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Wie viel ist 15²?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["215", "225", "235", "240"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "225"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>question: "Ein Auto fährt 240km in 3 Stunden. Wie hoch ist die Durchschnittsgeschwindigkeit?",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: ["70 km/h", "80 km/h", "90 km/h", "100 km/h"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>correct: "80 km/h"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>let current = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let score = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let timer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let timeLeft = 90;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const questionBox = document.getElementById("question-box");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const answersForm = document.getElementById("answers-form");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const nextBtn = document.getElementById("next-btn");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const resultBox = document.getElementById("result");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const timerBox = document.getElementById("timer");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function loadQuestion() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (current &gt;= questions.length) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>showResult();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const q = questions[current];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>questionBox.textContent = `Frage ${current + 1}: ${q.question}`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>answersForm.innerHTML = q.options.map(option =&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>`&lt;label&gt;&lt;input type="radio" name="answer" value="${option}"&gt; ${option}&lt;/label&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>).join("");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>nextBtn.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timeLeft = 90;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timerBox.textContent = `Zeit: ${timeLeft}`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timer = setInterval(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>timeLeft--;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>timerBox.textContent = `Zeit: ${timeLeft}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (timeLeft &lt;= 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>clearInterval(timer);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>checkAnswer();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}, 1000);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function checkAnswer() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>clearInterval(timer);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const selected = document.querySelector('input[name="answer"]:checked');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (selected &amp;&amp; selected.value === questions[current].correct) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>score++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>nextBtn.classList.remove("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>nextBtn.addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>current++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>loadQuestion();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answersForm.addEventListener("change", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>checkAnswer();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function showResult() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>questionBox.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>answersForm.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timerBox.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>nextBtn.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.remove("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>resultBox.textContent = `Du hast ${score} von ${questions.length} Fragen richtig beantwortet.`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>loadQuestion();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
